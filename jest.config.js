@@ -51,10 +51,12 @@ module.exports = {
   setupFiles: [
     '<rootDir>/static/app/utils/silence-react-unsafe-warnings.ts',
     '<rootDir>/tests/js/throw-on-react-error.js',
-    '<rootDir>/tests/js/setup.js',
     'jest-canvas-mock',
   ],
-  setupFilesAfterEnv: ['<rootDir>/tests/js/setupFramework.ts'],
+  setupFilesAfterEnv: [
+    '<rootDir>/tests/js/setupFramework.ts',
+    '<rootDir>/tests/js/setup.js',
+  ],
   testMatch: testMatch || ['<rootDir>/tests/js/**/*(*.)@(spec|test).(js|ts)?(x)'],
   testPathIgnorePatterns: ['<rootDir>/tests/sentry/lang/javascript/'],
 
