@@ -4,12 +4,14 @@ import {openMenu, selectByLabel} from 'sentry-test/select-new';
 import IssueListTagFilter from 'app/views/issueList/tagFilter';
 
 describe('IssueListTagFilter', function () {
-  let tagValueLoader;
-  let project;
+  let tagValueLoader: IssueListTagFilter['props']['tagValueLoader'];
+
+  // @ts-expect-error
+  const routerContext = TestStubs.routerContext();
 
   beforeEach(function () {
+    // @ts-expect-error
     MockApiClient.clearMockResponses();
-    project = TestStubs.ProjectDetails();
 
     tagValueLoader = () =>
       new Promise(resolve =>
@@ -21,6 +23,10 @@ describe('IssueListTagFilter', function () {
             lastSeen: '2018-05-30T11:33:46.535Z',
             name: 'foo',
             value: 'foo',
+            id: 'foo',
+            ip_address: '192.168.1.1',
+            email: 'hell@boy.cat',
+            username: 'foo',
           },
         ])
       );
@@ -29,19 +35,20 @@ describe('IssueListTagFilter', function () {
   it('calls API and renders options when opened', async function () {
     const selectMock = jest.fn();
     const tag = {key: 'browser', name: 'Browser'};
+
     const wrapper = mountWithTheme(
       <IssueListTagFilter
         tag={tag}
-        projectId={project.slug}
         value=""
         onSelect={selectMock}
         tagValueLoader={tagValueLoader}
       />,
-      TestStubs.routerContext()
+      routerContext
     );
 
     openMenu(wrapper, {control: true});
 
+    // @ts-expect-error
     await tick();
     wrapper.update();
 
@@ -59,10 +66,12 @@ describe('IssueListTagFilter', function () {
         onSelect={selectMock}
         tagValueLoader={tagValueLoader}
       />,
-      TestStubs.routerContext()
+      routerContext
     );
 
     openMenu(wrapper, {control: true});
+
+    // @ts-expect-error
     await tick();
     wrapper.update();
 
