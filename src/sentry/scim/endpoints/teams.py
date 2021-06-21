@@ -70,7 +70,7 @@ class OrganizationSCIMTeamIndex(SCIMEndpoint, OrganizationTeamsEndpoint):
             results = serialize(
                 results, None, TeamSCIMSerializer(), exclude_members=exclude_members
             )
-            return self.list_api_format(request, queryset, results)
+            return self.list_api_format(request, queryset.count(), results)
 
         return self.paginate(
             request=request,
