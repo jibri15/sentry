@@ -1749,7 +1749,7 @@ export type Tag = {
   maxSuggestedValues?: number;
 };
 
-export type TagCollection = {[key: string]: Tag};
+export type TagCollection = Record<string, Tag>;
 
 export type TagValue = {
   count: number;

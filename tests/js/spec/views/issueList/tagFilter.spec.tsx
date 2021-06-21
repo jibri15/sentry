@@ -1,42 +1,52 @@
-import {mountWithTheme} from 'sentry-test/enzyme';
-import {openMenu, selectByLabel} from 'sentry-test/select-new';
+/**
+ * @jest-environment jest-environment-jsdom-fifteen
+ */
+
+import {fireEvent, mountWithTheme, waitFor} from 'sentry-test/reactTestingLibrary';
 
 import IssueListTagFilter from 'app/views/issueList/tagFilter';
 
 describe('IssueListTagFilter', function () {
-  let tagValueLoader: IssueListTagFilter['props']['tagValueLoader'];
-
   // @ts-expect-error
   const routerContext = TestStubs.routerContext();
 
-  beforeEach(function () {
-    // @ts-expect-error
-    MockApiClient.clearMockResponses();
+  // @ts-expect-error
+  MockApiClient.clearMockResponses();
 
-    tagValueLoader = () =>
-      new Promise(resolve =>
-        resolve([
-          {
-            count: 0,
-            firstSeen: '2018-05-30T11:33:46.535Z',
-            key: 'browser',
-            lastSeen: '2018-05-30T11:33:46.535Z',
-            name: 'foo',
-            value: 'foo',
-            id: 'foo',
-            ip_address: '192.168.1.1',
-            email: 'hell@boy.cat',
-            username: 'foo',
-          },
-        ])
-      );
-  });
+  const selectMock = jest.fn();
+  const tag = {key: 'browser', name: 'Browser'};
+  const tagValueLoader: IssueListTagFilter['props']['tagValueLoader'] = () =>
+    new Promise(resolve =>
+      resolve([
+        {
+          count: 0,
+          firstSeen: '2018-05-30T11:33:46.535Z',
+          key: 'foo',
+          lastSeen: '2018-05-30T11:33:46.535Z',
+          name: 'foo',
+          value: 'foo',
+          id: 'foo',
+          ip_address: '192.168.1.1',
+          email: 'foo@boy.cat',
+          username: 'foo',
+        },
+        {
+          count: 0,
+          firstSeen: '2018-05-30T11:33:46.535Z',
+          key: 'fooBaar',
+          lastSeen: '2018-05-30T11:33:46.535Z',
+          name: 'fooBaar',
+          value: 'fooBaar',
+          id: 'fooBaar',
+          ip_address: '192.168.1.1',
+          email: 'fooBaar@boy.cat',
+          username: 'ffooBaaroo',
+        },
+      ])
+    );
 
   it('calls API and renders options when opened', async function () {
-    const selectMock = jest.fn();
-    const tag = {key: 'browser', name: 'Browser'};
-
-    const wrapper = mountWithTheme(
+    const {getByLabelText, getByTestId, getByText} = mountWithTheme(
       <IssueListTagFilter
         tag={tag}
         value=""
@@ -46,36 +56,17 @@ describe('IssueListTagFilter', function () {
       routerContext
     );
 
-    openMenu(wrapper, {control: true});
+    // changes dropdown input value
+    const input = getByLabelText(tag.key);
+    fireEvent.change(input, {target: {value: 'foo'}});
 
-    // @ts-expect-error
-    await tick();
-    wrapper.update();
+    // waits for the loading indicator to disappear
+    const loadingIndicator = getByText('Loading...');
+    await waitFor(() => expect(loadingIndicator).not.toBeInTheDocument());
 
-    selectByLabel(wrapper, 'foo', {control: true});
-    expect(selectMock).toHaveBeenCalledWith(tag, 'foo');
-  });
-
-  it('calls API and renders options when opened without project', async function () {
-    const selectMock = jest.fn();
-    const tag = {key: 'browser', name: 'Browser'};
-    const wrapper = mountWithTheme(
-      <IssueListTagFilter
-        tag={tag}
-        value=""
-        onSelect={selectMock}
-        tagValueLoader={tagValueLoader}
-      />,
-      routerContext
-    );
-
-    openMenu(wrapper, {control: true});
-
-    // @ts-expect-error
-    await tick();
-    wrapper.update();
-
-    selectByLabel(wrapper, 'foo', {control: true});
+    // selects menu option
+    const menuOptionFoo = getByTestId('select-control-option-foo');
+    fireEvent.click(menuOptionFoo);
 
     expect(selectMock).toHaveBeenCalledWith(tag, 'foo');
   });
