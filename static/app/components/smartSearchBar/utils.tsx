@@ -32,6 +32,10 @@ function getTitleForType(type: ItemType) {
     return t('Common Search Terms');
   }
 
+  if (type === 'tag-operator') {
+    return t('Operator Helpers');
+  }
+
   return t('Tags');
 }
 

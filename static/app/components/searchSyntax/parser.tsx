@@ -104,6 +104,8 @@ const allOperators = [
   TermOperator.NotEqual,
 ] as const;
 
+const basicOperators = [TermOperator.Default, TermOperator.NotEqual] as const;
+
 const textKeys = [Token.KeySimple, Token.KeyExplicitTag] as const;
 
 const numberUnits = {
@@ -123,7 +125,7 @@ const numberUnits = {
 export const filterTypeConfig = {
   [FilterType.Text]: {
     validKeys: textKeys,
-    validOps: [],
+    validOps: basicOperators,
     validValues: [Token.ValueText],
     canNegate: true,
   },
@@ -171,7 +173,7 @@ export const filterTypeConfig = {
   },
   [FilterType.Boolean]: {
     validKeys: [Token.KeySimple],
-    validOps: [],
+    validOps: basicOperators,
     validValues: [Token.ValueBoolean],
     canNegate: true,
   },
@@ -207,13 +209,13 @@ export const filterTypeConfig = {
   },
   [FilterType.Has]: {
     validKeys: [Token.KeySimple],
-    validOps: [],
+    validOps: basicOperators,
     validValues: [],
     canNegate: true,
   },
   [FilterType.Is]: {
     validKeys: [Token.KeySimple],
-    validOps: [],
+    validOps: basicOperators,
     validValues: [Token.ValueText],
     canNegate: true,
   },
