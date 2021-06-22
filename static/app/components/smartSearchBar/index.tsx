@@ -803,37 +803,37 @@ class SmartSearchBar extends React.Component<Props, State> {
       [TermOperator.Default]: {
         type: 'tag-operator' as ItemType,
         value: ':',
-        desc: `${tag}:[value] is equal to`,
+        desc: t(`${tag}:[value] is equal to`),
       },
       [TermOperator.GreaterThanEqual]: {
         type: 'tag-operator' as ItemType,
         value: ':>=',
-        desc: `${tag}:>=[value] is greater than or equal to`,
+        desc: t(`${tag}:>=[value] is greater than or equal to`),
       },
       [TermOperator.LessThanEqual]: {
         type: 'tag-operator' as ItemType,
         value: ':<=',
-        desc: `${tag}:<=[value] is less than or equal to`,
+        desc: t(`${tag}:<=[value] is less than or equal to`),
       },
       [TermOperator.GreaterThan]: {
         type: 'tag-operator' as ItemType,
         value: ':>',
-        desc: `${tag}:>[value] is greater than`,
+        desc: t(`${tag}:>[value] is greater than`),
       },
       [TermOperator.LessThan]: {
         type: 'tag-operator' as ItemType,
         value: ':<',
-        desc: `${tag}:<[value] is less than`,
+        desc: t(`${tag}:<[value] is less than`),
       },
       [TermOperator.Equal]: {
         type: 'tag-operator' as ItemType,
         value: ':=',
-        desc: `${tag}:=[value] is equal to`,
+        desc: t(`${tag}:=[value] is equal to`),
       },
       [TermOperator.NotEqual]: {
         type: 'tag-operator' as ItemType,
         value: '!:',
-        desc: `!${tag}:[value] is not equal to`,
+        desc: t(`!${tag}:[value] is not equal to`),
       },
     };
     return validOps.map(op => operatorMap[op]);
