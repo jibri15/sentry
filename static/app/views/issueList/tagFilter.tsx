@@ -199,7 +199,7 @@ class IssueListTagFilter extends React.Component<Props, State> {
               }>) => {
                 return (
                   <components.Option label={label} {...optionProps}>
-                    <span data-test-id={`select-control-option-${label}`}> {label}</span>
+                    <span data-test-id={`select-control-option-${label}`}>{label}</span>
                   </components.Option>
                 );
               },
