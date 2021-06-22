@@ -7,12 +7,13 @@ function renderComponent(avatarUsersSixUsers: AvatarList['props']['users']) {
 }
 
 describe('AvatarList', () => {
+  // @ts-expect-error
+  const user = TestStubs.User();
+
   it('renders with user letter avatars', () => {
     const users = [
-      // @ts-expect-error
-      TestStubs.User({id: '1', name: 'AB'}),
-      // @ts-expect-error
-      TestStubs.User({id: '2', name: 'BC'}),
+      {...user, id: '1', name: 'AB'},
+      {...user, id: '2', name: 'BC'},
     ];
 
     const {container, queryByTestId, getByText} = renderComponent(users);
@@ -20,23 +21,17 @@ describe('AvatarList', () => {
     expect(getByText('B')).toBeTruthy();
     expect(queryByTestId('avatarList-collapsedusers')).toBeNull();
 
-    expect({html: () => container.innerHTML}).toSnapshot();
+    expect(container).toSnapshot();
   });
 
   it('renders with collapsed avatar count if > 5 users', () => {
     const users = [
-      // @ts-expect-error
-      TestStubs.User({id: '1', name: 'AB'}),
-      // @ts-expect-error
-      TestStubs.User({id: '2', name: 'BC'}),
-      // @ts-expect-error
-      TestStubs.User({id: '3', name: 'CD'}),
-      // @ts-expect-error
-      TestStubs.User({id: '4', name: 'DE'}),
-      // @ts-expect-error
-      TestStubs.User({id: '5', name: 'EF'}),
-      // @ts-expect-error
-      TestStubs.User({id: '6', name: 'FG'}),
+      {...user, id: '1', name: 'AB'},
+      {...user, id: '2', name: 'BC'},
+      {...user, id: '3', name: 'CD'},
+      {...user, id: '4', name: 'DE'},
+      {...user, id: '5', name: 'EF'},
+      {...user, id: '6', name: 'FG'},
     ];
 
     const {container, getByTestId, queryByText, queryAllByText} = renderComponent(users);
@@ -47,6 +42,6 @@ describe('AvatarList', () => {
     expect(queryAllByText(users[4].name.charAt(0))).toBeTruthy();
     expect(queryByText(users[5].name.charAt(0))).toBeNull();
     expect(getByTestId('avatarList-collapsedusers')).toBeTruthy();
-    expect({html: () => container.innerHTML}).toSnapshot();
+    expect(container).toSnapshot();
   });
 });

@@ -1,7 +1,3 @@
-/**
- * @jest-environment jest-environment-jsdom-fifteen
- */
-
 import {fireEvent, mountWithTheme, waitFor} from 'sentry-test/reactTestingLibrary';
 
 import IssueListTagFilter from 'app/views/issueList/tagFilter';

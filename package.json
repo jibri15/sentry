@@ -164,7 +164,6 @@
     "jest": "26.6.3",
     "jest-canvas-mock": "^2.3.1",
     "jest-circus": "26.6.3",
-    "jest-environment-jsdom-fifteen": "^1.0.2",
     "jest-fetch-mock": "^3.0.3",
     "jest-junit": "^9.0.0",
     "mockdate": "3.0.5",
