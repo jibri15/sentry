@@ -681,6 +681,7 @@ const defaultConfig: SearchConfig = {
     'first_seen',
     'last_seen',
     'time',
+    'event.timestamp',
     'timestamp',
     'timestamp.to_hour',
     'timestamp.to_day',

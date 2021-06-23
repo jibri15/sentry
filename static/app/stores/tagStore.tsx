@@ -129,7 +129,7 @@ const tagStoreConfig: Reflux.StoreDefinition & TagStoreInterface = {
       'event.timestamp': {
         key: 'event.timestamp',
         name: 'Event Timestamp',
-        values: ['2017-01-02', '>=2017-01-02T01:00:00', '<2017-01-02T02:00:00'],
+        values: ['2017-01-02'],
         predefined: true,
       },
       timesSeen: {
