@@ -65,7 +65,7 @@ export type QueryFieldValue =
     }
   | {
       kind: 'function';
-      function: [AggregationKey, string, AggregationRefinement];
+      function: [AggregationKey, string, AggregationRefinement, AggregationRefinement];
     };
 
 // Column is just an alias of a Query value
@@ -773,6 +773,7 @@ export function explodeFieldString(field: string): Column {
         results.name as AggregationKey,
         results.arguments[0] ?? '',
         results.arguments[1] as AggregationRefinement,
+        results.arguments[2] as AggregationRefinement,
       ],
     };
   }
