@@ -13,6 +13,7 @@ import Creatable from 'react-select/creatable';
 import {withTheme} from '@emotion/react';
 
 import {IconChevron, IconClose} from 'app/icons';
+import {t} from 'app/locale';
 import space from 'app/styles/space';
 import {Choices, SelectValue} from 'app/types';
 import convertFromSelect2Choices from 'app/utils/convertFromSelect2Choices';
@@ -277,6 +278,7 @@ function SelectControl<OptionType extends GeneralSelectValue = GeneralSelectValu
     styles,
     value,
     inFieldLabel,
+    loadingMessage = () => t('Loading\u2026'),
     ...rest
   } = props;
 
@@ -352,6 +354,7 @@ function SelectControl<OptionType extends GeneralSelectValue = GeneralSelectValu
       isDisabled={props.isDisabled || props.disabled}
       options={options || (choicesOrOptions as OptionsType<OptionType>)}
       openMenuOnFocus={props.openMenuOnFocus === undefined ? true : props.openMenuOnFocus}
+      loadingMessage={loadingMessage}
       {...rest}
     />
   );

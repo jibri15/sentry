@@ -57,7 +57,8 @@ describe('IssueListTagFilter', function () {
     fireEvent.change(input, {target: {value: 'foo'}});
 
     // waits for the loading indicator to disappear
-    const loadingIndicator = getByText('Loading...');
+    const loadingIndicator = getByText('Loading\u2026');
+
     await waitFor(() => expect(loadingIndicator).not.toBeInTheDocument());
 
     // the result has a length of 2, because when performing a search,
