@@ -42,7 +42,7 @@ describe('IssueListTagFilter', function () {
     );
 
   it('calls API and renders options when opened', async function () {
-    const {getByLabelText, getByTestId, getByText} = mountWithTheme(
+    const {getByLabelText, getByText, getAllByText} = mountWithTheme(
       <IssueListTagFilter
         tag={tag}
         value=""
@@ -60,8 +60,12 @@ describe('IssueListTagFilter', function () {
     const loadingIndicator = getByText('Loading...');
     await waitFor(() => expect(loadingIndicator).not.toBeInTheDocument());
 
+    // the result has a length of 2, because when performing a search,
+    // an element containing the same value is present in the rendered HTML markup
+    const allFoo = getAllByText('foo');
+
     // selects menu option
-    const menuOptionFoo = getByTestId('select-control-option-foo');
+    const menuOptionFoo = allFoo[1];
     fireEvent.click(menuOptionFoo);
 
     expect(selectMock).toHaveBeenCalledWith(tag, 'foo');

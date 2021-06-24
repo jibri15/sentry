@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {components, OptionProps} from 'react-select';
 import styled from '@emotion/styled';
 import debounce from 'lodash/debounce';
 
@@ -189,21 +188,6 @@ class IssueListTagFilter extends React.Component<Props, State> {
                   }))
                 : options
             }
-            components={{
-              Option: ({
-                label,
-                ...optionProps
-              }: OptionProps<{
-                label: string;
-                value: string;
-              }>) => {
-                return (
-                  <components.Option label={label} {...optionProps}>
-                    <span data-test-id={`select-control-option-${label}`}>{label}</span>
-                  </components.Option>
-                );
-              },
-            }}
           />
         )}
       </StreamTagFilter>
