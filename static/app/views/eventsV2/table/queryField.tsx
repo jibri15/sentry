@@ -44,9 +44,9 @@ type ParameterDescription =
     }
   | {
       kind: 'dropdown';
-      value: ColumnType;
+      value: string;
       options: SelectValue<string>[];
-      dataType: ColumnType;
+      dataType: string;
       required: boolean;
       placeholder?: string;
     };
@@ -310,7 +310,6 @@ class QueryField extends React.Component<Props> {
               options: param.options,
               dataType: param.dataType,
               required: param.required,
-              placeholder: param.placeholder,
               value:
                 (fieldValue.kind === 'function' && fieldValue.function[index + 1]) ||
                 param.defaultValue ||

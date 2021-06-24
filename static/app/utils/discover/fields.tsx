@@ -50,7 +50,7 @@ export type AggregateParameter =
   | {
       kind: 'dropdown';
       options: SelectValue<string>[];
-      dataType: ColumnType;
+      dataType: string;
       defaultValue?: string;
       required: boolean;
       placeholder?: string;
