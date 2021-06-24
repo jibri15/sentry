@@ -683,6 +683,8 @@ export function getMeasurementSlug(field: string): string | null {
 }
 
 const AGGREGATE_PATTERN = /^([^\(]+)\((.*)?\)$/;
+// Identical to AGGREGATE_PATTERN, but without the $ for newline, or ^ for start of line
+const AGGREGATE_BASE = /([^\(]+)\((.*)?\)/g;
 
 export function getAggregateArg(field: string): string | null {
   // only returns the first argument if field is an aggregate
@@ -787,6 +789,12 @@ export function getEquationAliasIndex(field: string): number {
 
 export function getEquation(field: string): string {
   return field.slice(EQUATION_PREFIX.length);
+}
+
+export function isAggregateEquation(field: string): boolean {
+  const results = field.match(AGGREGATE_BASE);
+
+  return isEquation(field) && results !== null && results.length > 0;
 }
 
 export function generateAggregateFields(
