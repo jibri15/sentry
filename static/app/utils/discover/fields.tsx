@@ -1,4 +1,4 @@
-import {LightWeightOrganization} from 'app/types';
+import {LightWeightOrganization, SelectValue} from 'app/types';
 import {assert} from 'app/types/utils';
 
 export type Sort = {
@@ -46,6 +46,14 @@ export type AggregateParameter =
       defaultValue?: string;
       required: boolean;
       placeholder?: string;
+    }
+  | {
+      kind: 'dropdown';
+      options: SelectValue<string>[];
+      dataType: ColumnType;
+      defaultValue?: string;
+      required: boolean;
+      placeholder?: string;
     };
 
 export type AggregationRefinement = string | undefined;
@@ -73,7 +81,34 @@ export type Column = QueryFieldValue;
 
 export type Alignments = 'left' | 'right';
 
-// Refer to src/sentry/api/event_search.py
+const CONDITIONS_ARGUMENTS: SelectValue<string>[] = [
+  {
+    label: 'equal =',
+    value: 'equals',
+  },
+  {
+    label: 'not equal !=',
+    value: 'notEquals',
+  },
+  {
+    label: 'less <',
+    value: 'less',
+  },
+  {
+    label: 'greater >',
+    value: 'greater',
+  },
+  {
+    label: 'less or equals <=',
+    value: 'lessOrEquals',
+  },
+  {
+    label: 'greater or equals >=',
+    value: 'greaterOrEquals',
+  },
+];
+
+// Refer to src/sentry/search/events/fields.py
 export const AGGREGATIONS = {
   count: {
     parameters: [],
@@ -343,6 +378,32 @@ export const AGGREGATIONS = {
       {
         kind: 'value',
         dataType: 'number',
+        defaultValue: '300',
+        required: true,
+      },
+    ],
+    outputType: 'number',
+    isSortable: true,
+    multiPlotType: 'area',
+  },
+  count_if: {
+    parameters: [
+      {
+        kind: 'column',
+        columnTypes: ['string', 'duration'],
+        defaultValue: 'transaction.duration',
+        required: true,
+      },
+      {
+        kind: 'dropdown',
+        options: CONDITIONS_ARGUMENTS,
+        dataType: 'string',
+        defaultValue: CONDITIONS_ARGUMENTS[0].value,
+        required: true,
+      },
+      {
+        kind: 'value',
+        dataType: 'string',
         defaultValue: '300',
         required: true,
       },
